@@ -1,1 +1,7 @@
 # Foo
+height: 480
+width: 640
+
+counter: 800
+
+xml_to_extract: "5443528.xml"
