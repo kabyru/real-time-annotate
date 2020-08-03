@@ -15,7 +15,7 @@ Real-Time Annotation can be separated into two steps:
 - Set the configurations of the program by modifying the *config .yaml* file.
 - The execution of *real-time-annotate .py* program, which will read the hand-annotated XML to generate a shape for which to fit the new input images.
 
-The hand-annotated image must be annotated in XML format, which is standard for individual TensorFlow annotations. Hand-annotations can be created using the [**LabelImg** tool, which is available on GitHub.](labelImglink)
+The hand-annotated image must be annotated in XML format, which is standard for individual TensorFlow annotations. Hand-annotations can be created using the [**LabelImg** tool, which is available on GitHub.](https://github.com/tzutalin/labelImg)
 
 There are three configurations to consider within *config .yaml*:
 - The width and height of the images within your training set.
@@ -30,4 +30,4 @@ For generated annotation XML files from this template, the bounding box coordina
 
 **To take images and create annotations within the program, press the 's' key. Check the terminal to confirm that the image has been taken.Images are saved to the current working directory.**
 
-These XMLs are then ready for conversion to CSV, once the program has been run for each labeled set. [Refer to this guide to continue on with the next steps of creating a TensorFlow Custom Object Detection Model](TheMediumArticle)
+These XMLs are then ready for conversion to CSV, once the program has been run for each labeled set. [Refer to this guide to continue on with the next steps of creating a TensorFlow Custom Object Detection Model](https://towardsdatascience.com/custom-object-detection-using-tensorflow-from-scratch-e61da2e10087)
