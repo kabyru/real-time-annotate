@@ -62,6 +62,65 @@ def XMLExtract():
 
     return doc, xmin, xmax, ymin, ymax, width, height
 
+def XMLExtractMultiple():
+    print("Opening " + str(config['xml_to_extract']) + " and extracting bounding box coords..." )
+    with open(config['xml_to_extract']) as fd:
+        doc = xmltodict.parse(fd.read())
+    subDoc = doc['annotation']['object'] #Contains the 'object' information from the XML file, for each labeled object.
+    
+    print("Extracting size of image...")
+    width = int(doc['annotation']['size']['width'])
+    height = int(doc['annotation']['size']['height'])
+
+    #Test out unparsing
+    #print(xmltodict.unparse(doc, pretty=True))
+    #print(subDoc)
+
+    return doc, subDoc, width, height
+
+def webcam_handler_multiple():
+    vs = VideoStream().start() #Opens the first webcam it finds
+    #Retreive the bndbox coords from each labeled object.
+    doc, subDoc, width, height = XMLExtractMultiple()
+    color = (255, 0, 0)
+    thickness = 2
+    counter = int(config['counter'])
+    while True:
+        key = cv2.waitKey(1) & 0xFF
+
+        frame = vs.read()
+        frame = im.resize(frame, height=height)
+        frame = im.resize(frame, width=width)
+
+        #Now, add the rectangles as per the bndboxes within the XML file...
+        for labeledObject in subDoc:
+            #print(labeledObject)
+            xmin = int(labeledObject['bndbox']['xmin'])
+            xmax = int(labeledObject['bndbox']['xmax'])
+            ymin = int(labeledObject['bndbox']['ymin'])
+            ymax = int(labeledObject['bndbox']['ymax'])
+
+            start_point = (xmin, ymin)
+            end_point = (xmax, ymax)
+
+            rectangleFrame = cv2.rectangle(frame, start_point, end_point, color, thickness)
+        
+        cv2.imshow("Real-Time Annotate", rectangleFrame)
+
+        if key == ord("q"):
+            break
+
+        if key == ord("s"):
+            svFrame = vs.read()
+            svFrame = im.resize(svFrame, height=height)
+            svFrame = im.resize(svFrame, width=width)
+            saveFrame(svFrame, counter, doc)
+            counter = counter + 1
+    
+    cv2.destroyAllWindows()
+    vs.stop()
+
+
 def webcam_handler():
     vs = VideoStream().start() #Opens the first webcam it finds.
     #Retreive the coords from the XML file.
@@ -97,4 +156,7 @@ def webcam_handler():
     cv2.destroyAllWindows()
     vs.stop()
 
-webcam_handler()
+if config['multiple-objects-in-file'] == True:
+    webcam_handler_multiple()
+else:
+    webcam_handler()

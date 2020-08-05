@@ -4,4 +4,6 @@ width: 640
 
 counter: 800
 
-xml_to_extract: "5443528.xml"
+multiple-objects-in-file: True
+
+xml_to_extract: "multiple-objects.xml"
