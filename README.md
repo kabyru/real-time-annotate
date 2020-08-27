@@ -1,5 +1,5 @@
 # Real Time Annotation Tool for Constantly Positioned Objects
-## Developed by Kaleb Byrum for Raytheon Technologies, Missiles & Defense
+## Developed by Kaleb Byrum
 ### This tool intends to speed up the annotation process by making the assumption that objects being labeled are constant in position and lighting. This assumption is helpful in creating Object Detection systems in industrial environments.
 
 ## Introduction
